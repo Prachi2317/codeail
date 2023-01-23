@@ -7,5 +7,7 @@ const homeController=require('../controllers/home_controller');
 console.log('router loaded');
 // It will call the home function joki home_controller.js file mein h
 router.get('/',homeController.home);
+// if there is any other route after localhost:8000/users...... is redirect to users.js
+router.use('/users',require('./users'));
 // we are exporting this so it is available to index.js i.e our entry point file
-module.exports=router;
+module.exports=router;  
