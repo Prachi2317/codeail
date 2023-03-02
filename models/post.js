@@ -1,17 +1,17 @@
-const moongoose=require('moongoose');
-const postSchema = new moongoose.Schema({
+const mongoose=require('mongoose');
+const postSchema = new mongoose.Schema({
     content:{
-        tyep:String,
+        type:String,
         required:true
     },
     user:{
-        type:moongoose.Schema.Types.objectId,
-        ref:'user'
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
 
     }
     },{
         timestamps:true
     });
 
-    const Post=moongoose.model('post',postSchema);
+    const Post=mongoose.model('Post',postSchema);
     module.exports=Post;
