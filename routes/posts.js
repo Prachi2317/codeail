@@ -4,4 +4,5 @@ const postsController=require('../controllers/post_controller');
 const passport=require('passport');
 // we apply a check if the user is not authenticated that user can not create post
 router.post('/create',passport.checkAuthentication,postsController.create);
+router.get('/destroy/:id',passport.checkAuthentication,postsController.destroy);
 module.exports=router;
