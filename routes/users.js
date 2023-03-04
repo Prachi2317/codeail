@@ -4,6 +4,7 @@ const passport=require('passport');
  const usersController=require('../controllers/users_controller');
  // user can not access the profile page until user is signed in or authenticated
  router.get('/profile/:id',passport.checkAuthentication,usersController.profile);
+ router.post('/update/:id',passport.checkAuthentication,usersController.update);
  console.log('router loaded 2');
  router.get('/sign-up',usersController.signUp);
  router.get('/sign-in',usersController.signIn);
