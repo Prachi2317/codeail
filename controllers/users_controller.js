@@ -1,9 +1,20 @@
 // import model
 const User=require('../models/user')
 module.exports.profile= function(req,res){
-  return res.render('user_profile',{
-    title:"userProfile"
-  });
+  // find the user
+  User.findById(req.params.id,function(err,user){
+    if(user){
+      return res.render('user_profile',{
+        title:"userProfile",
+        //we can not use key as user cuz user key is present in locals
+        profile_user:user
+      });
+    }
+    else{
+
+    }
+  })
+ 
 }
 // render the sign up page
 module.exports.signUp=function(req,res){

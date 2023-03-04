@@ -1,5 +1,5 @@
 const Post=require('../models/post');
-const Comment=require('../models/comment');
+const User=require('../models/user');
 
 // export the controller func so that It can be accessible in the project , routes can use it
 module.exports.home= async function(req,res){
@@ -18,11 +18,13 @@ module.exports.home= async function(req,res){
       path:'user'
     }
   })
-  
+  // fetch all the users
+  let users= await User.find({});
   
   return res.render('home',{
             title:"Codeial | Home",
-            posts:posts
+            posts:posts,
+            all_users:users
         });
   
      
