@@ -82,15 +82,22 @@ module.exports.create=function(req,res){
 }
 // sign in and create the session for the user
 module.exports.createSession=function(req,res){
+  // set up the messages
+  req.flash('success','Logged In Sucessfully');
    return res.redirect('/');
 }
 
 module.exports.destroySession=function(req,res){
   // this logout fun is given by passport.js
+
   req.logout(req.user, err => {
     if(err)
      return next(err);
+     req.flash('success','you have logged out!');
     res.redirect("/");
   });
+  
+ 
+
 }
  

@@ -12,6 +12,8 @@ const passport=require('passport');
 const passportLocal=require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo');
 const sass = require('sass');
+const flash=require('connect-flash');
+const customMware=require('./config/middleware');
 
 
 
@@ -57,6 +59,11 @@ app.use(passport.session());
 // when the app is intialized passport is also getting intialized and setAuthenticatedUser function called automatically cuz it is middleawre and they get called automatically
 // this function checked whether the session cookie is present or not
 app.use(passport.setAuthenticatedUser);
+// after the passport and just before the route we need to use the flash-connect
+//bcuz this flash usses session-cookie so we need to send this after session cookie
+// flash msg is set into the session cookie
+app.use(flash());  
+app.use(customMware.setFlash);
 // use express router
 
 app.use('/',require('./routes'));
