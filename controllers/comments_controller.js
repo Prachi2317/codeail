@@ -38,12 +38,13 @@ module.exports.create= async function(req,res){
          post.comments.push(comment);
          // whenever i am updating anything we need to save this so after that it is save permanetly in db
          post.save();
-         
+         req.flash('success','comment posted');
          res.redirect('/');
   
   }
 } catch(err){
-   console.log('Error',err);
+  //  console.log('Error',err);
+  req.flash('error',err);
    return;
   }
 }    
@@ -73,14 +74,17 @@ module.exports.destroy=async function(req,res){
         let postId=comment.post;
         comment.remove();
         Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}},function(err,post){
+             req.flash('success','comment deleted');
                  return res.redirect('back');
               });
  }
  else{
+   req.flash('error','you can not delete this comment');
   return res.redirect('back');
  }
  }catch(err){
-  console.log('Error',err);
+   req.flash('error',err);
+  // console.log('Error',err);
   return;
  }
 }

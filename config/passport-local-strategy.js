@@ -10,16 +10,20 @@ const User=require('../models/user');
 
 passport.use(new LocalStrategy({
     usernameField:'email',
+    //This allows us to pass req in callback function
+    passReqToCallback:true
     
-}, function(email,password,done){
+}, function(req,email,password,done){
     // find the user and establish the identity
      User.findOne({email:email},function(err,user){
             if(err){
-                console.log('Error in finding user-->passport');
+                req.flash('error',err);
+            //    console.log('Er ror in finding user-->passport');
                 return done(err);
             }
             if(!user || user.password!= password){
-              console.log('invalis username/password');
+                req.flash('error','invalid username and password');
+            //   console.log('invalis username/password');
               // there is no error but user not found so in done method it takes two argument,one is null means no error,false means authentication not done
               return done(null ,false);
 
