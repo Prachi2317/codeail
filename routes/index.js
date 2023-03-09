@@ -12,5 +12,6 @@ router.use('/users',require('./users'));
 // we have import the posts.js in in this file
 router.use('/posts',require('./posts'));
 router.use('/comments',require('./comments'));
+router.use('/api',require('./api'));
 // we are exporting this so it is available to index.js i.e our entry point file
 module.exports=router;  

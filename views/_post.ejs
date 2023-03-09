@@ -1,10 +1,10 @@
-<li>
+<li id="post-<%=post._id%>">
     <p>
         <!-- if the user is authenticated and authorized to delete the post only then it shows -->
         <!-- if the user is looged in and the user who is looged in and the user who posts the post both are same then only show delete botton -->
         <% if((locals.user)&& (locals.user.id==post.user.id)){%>
         <small>
-            <a href="/posts/destroy/<%=post.id%>">Delete</a>
+            <a class="delete-post-button" href="/posts/destroy/<%=post.id%>">Delete</a>
         </small>
         <% }%>
     <%= post.content %><br>

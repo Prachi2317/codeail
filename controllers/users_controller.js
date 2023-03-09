@@ -19,19 +19,55 @@ module.exports.profile= function(req,res){
 }
 
 //update user deatils
-module.exports.update=function(req,res){
-  // it is a check that verifies the login user with the user id that he/she wants to update data 
-  if(req.user.id==req.params.id){
-    // you can only write req.body instead of {name:req.body.name,email:req.body.email}
-   User.findByIdAndUpdate(req.params.id,{name:req.body.name,email:req.body.email},function(err,user){
+// module.exports.update=function(req,res){
+//   // it is a check that verifies the login user with the user id that he/she wants to update data 
+//   if(req.user.id==req.params.id){
+//     // you can only write req.body instead of {name:req.body.name,email:req.body.email}
+//    User.findByIdAndUpdate(req.params.id,{name:req.body.name,email:req.body.email},function(err,user){
 
-     return res.redirect('back');
-   });
+//      return res.redirect('back');
+//    });
+//   }
+//   else{
+//     return res.status(401).send('Unauthorized')
+//   }
+// }
+module.exports.update= async function(req,res){
+  if(req.user.id==req.params.id){
+     try{
+        //you can only write req.body instead of {name:req.body.name,email:req.body.email}
+        let user= await User.findByIdAndUpdate(req.params.id);
+       User.uploadedAvatar(req,res,function(err){
+        if(err){
+          console.log('***Multer Error: ',err);
+          //return res.redirect('back');
+        }
+        console.log(req.file);
+        user.name=req.body.name;
+        user.email=req.body.email;
+        // you need to check wthether a 
+        if(req.file){
+          // this is just saving the path of uploaded file into thr avatar field in the user
+          user.avatar=User.avatarPath+'/'+req.file.filename;
+        }
+        user.save();
+        return res.redirect('back');
+        
+       });
+        req.flash('success','updated');
+        return res.redirect('back');
+     }catch(err){
+        req.flash('error',err);
+        return res.redirect('back');
+     }
+      }
+      else{
+        req.flash('error','unauthorized');
+        return res.status(401).send('Unauthorized');
+      }
   }
-  else{
-    return res.status(401).send('Unauthorized')
-  }
-}
+   
+
 // render the sign up page
 module.exports.signUp=function(req,res){
   // if the user is already signed-in and wants to access the sign-up page it will redirect to profile page  

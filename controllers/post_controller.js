@@ -6,6 +6,15 @@ module.exports.create= async function(req,res){
       content:req.body.content,
       user:req.user._id
     });
+    //type of ajax request is xml ,http
+    if(req.xhr){
+      return res.status(200).json({
+        data:{
+          post:post
+        },
+        message:"post created!"
+      })
+    }
     req.flash('success','post published');
     return res.redirect('back');
     
@@ -44,6 +53,13 @@ module.exports.destroy=async function(req,res){
      post.remove();
        // used for delete multiple documents 
       await Comment.deleteMany({ post:req.params.id});
+      if(req.xhr){
+        return res.status(200).json({
+          data:{
+            post_id:req.params.id
+          },message:"post deleted"
+        })
+      }
       req.flash('success','post and associated comments deleted');
        return res.redirect('back');
       }
