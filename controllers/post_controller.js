@@ -6,11 +6,12 @@ module.exports.create= async function(req,res){
       content:req.body.content,
       user:req.user._id
     });
+     let newPost=await post.populate('user');
     //type of ajax request is xml ,http
     if(req.xhr){
       return res.status(200).json({
         data:{
-          post:post
+          post:newPost
         },
         message:"post created!"
       })

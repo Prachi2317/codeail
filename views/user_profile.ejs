@@ -7,6 +7,9 @@
      <%if(locals.user && (locals.user.id==profile_user.id)) { %>
       <!-- if user matches show the form  -->
       <p><%=profile_user.name%></p>
+      <p>
+        <img src="<%=profile_user.avatar%>">
+      </p>
       <form action="/users/update/<%= profile_user.id%>" enctype="multipart/form-data" method="post" >
         <input type="text" name="name" placeholder="your name" value="<%=profile_user.name%>" required >
         <input type="text" name="email" placeholder="your email" value="<%=profile_user.email%>" required >

@@ -9,7 +9,9 @@ const db=require('./config/mongoose');
 // used for session cookie
 const session=require('express-session');
 const passport=require('passport');
+// we have to mention every strategy in our index.js file
 const passportLocal=require('./config/passport-local-strategy');
+const passportJWT=require('./config/passport-jwt-strategy');
 const MongoStore=require('connect-mongo');
 const sass = require('sass');
 const flash=require('connect-flash');
@@ -25,6 +27,7 @@ app.use(express.urlencoded({
 // tell our app to use cookieParser
   app.use(cookieParser());
 app.use(expressLayouts);
+app.use('/uploads',express.static(__dirname+"/uploads"));
 app.use(express.static('./assets'));
 //extract style and scripts from subpages into the layout
 app.set('layout extractStyles',true);

@@ -3,7 +3,7 @@ const mongoose= require('mongoose');
 // we are importing multer in user multer bcuz we are importing multer for user now
 const multer=require('multer');
 const path=require('path');
-const AVATAR_PATH=path.join('/uplaods/users/avatars')
+const AVATAR_PATH=path.join('/uploads/users/avatars')
 const userSchema=new mongoose.Schema({
  email:{
     type:String,

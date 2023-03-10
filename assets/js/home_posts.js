@@ -12,7 +12,7 @@
                 let newPost=newPostDom(data.data.post);
                 // prepend means putting it in the first position
                 $('#posts-list-conatainer>ul').prepend(newPost);
-                deletePost($('.delete-post-button',newPost));
+                deletePost($(' .delete-post-button',newPost));
                 },
                 error:function(error){
                 console.log(error.responseText);
@@ -60,7 +60,7 @@
             type:'get',
             url:$(deleteLink).prop('href'),
             success:function(data){
-             $(`#post-${data.post_id}`).remove();
+             $(`#post-${data.data.post_id}`).remove();
             },
             error:function(error){
                 console.log(error.responseText);
