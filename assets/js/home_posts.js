@@ -22,7 +22,6 @@
     }
     // method to create a post in dom
     let newPostDom=function(post){
-        console.log(post);
       return $(`<li id="post-${post._id}">
       <p>
           

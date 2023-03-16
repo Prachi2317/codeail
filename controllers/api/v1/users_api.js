@@ -14,7 +14,7 @@ module.exports.createSession= async function(req,res){
          // token expires in 10 secs and token created consists three things header,payload and signature
          // we are encrypted the token using key (codeail)
          data:{
-          token:jwt.sign(user.toJSON(),'codeail',{expiresIn:'10000'})
+          token:jwt.sign(user.toJSON(),'codeial',{expiresIn:'100000'})
       }
        })
     } catch(err){

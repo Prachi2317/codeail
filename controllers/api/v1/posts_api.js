@@ -1,6 +1,7 @@
 const Post=require('../../../models/post');
 const Comment=require('../../../models/comment');
 module.exports.index= async function(req,res){
+  console.log("p")
     let posts=await Post.find({}).sort('-createdAt').populate('user').populate({
         path:'comments',
         populate:{
@@ -13,17 +14,27 @@ module.exports.index= async function(req,res){
      });
 }
 module.exports.destroy=async function(req,res){
+  console.log(req.params.id);
     try{
       let post=await Post.findById(req.params.id);
+      console.log(post);
+      if(post.user==req.user.id){
+        post.remove();
+        // used for delete multiple documents 
+       await Comment.deleteMany({ post:req.params.id});
+       
+       
+        return res.json(200,{
+           message:"Post and associated comment deleted sucessfully"
+        });
+      
+      }
+      else{
+        return res.json(401,{
+          message:"you can not not delete this post"
+        })
+      }
      
-       post.remove();
-         // used for delete multiple documents 
-        await Comment.deleteMany({ post:req.params.id});
-        
-        
-         return res.json(200,{
-            message:"Post and associated comment deleted sucessfully"
-         });
        
     } catch(err){
       return res.json(500,{
